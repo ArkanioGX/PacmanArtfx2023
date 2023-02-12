@@ -1,8 +1,7 @@
 #pragma once
 #include <string>
 #include "raylib.h"
-#include "Player.h"
-#include "Enemy.h"
+
 #include "assert.h"
 #include "Map.h"
 #include <iostream>
@@ -23,7 +22,7 @@ private:
 	std::string scoreTxt;
 
 	Player *player;
-	std::array<Enemy*, 4> Enemies;
+	std::vector<Enemy*> Enemies;
 
 	Map *map;
 

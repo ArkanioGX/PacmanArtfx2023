@@ -1,6 +1,7 @@
 #pragma once
-#include "Actor.h"
 #include "Map.h"
+#include "Actor.h"
+#include <vector>
 #include <iostream>
 class Player : public Actor
 {
@@ -12,6 +13,8 @@ private:
 
 	bool isDead, Won;
 
+	std::vector<Enemy> Enemies;
+
 public:
 	void tick();
 
@@ -21,5 +24,7 @@ public:
 		return score;
 	}
 	bool getIsDead(), isWon();
+
+	void setEnemies(std::vector<Enemy*> en);
 };
 

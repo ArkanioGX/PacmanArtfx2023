@@ -1,5 +1,6 @@
 #include "Map.h"
 
+
 int Map::getMapSize()
 {
     return (sizeof idMap / sizeof idMap[0]);
@@ -20,6 +21,7 @@ void Map::loadMap()
                 break;
             case 2:
                 Power.push_back(Vector2{ (float)x * tileSize + (tileSize / 2 - tileSize / 4),((float)y + 1) * tileSize + (tileSize / 2 - tileSize / 4) });
+                foodPicked.push_back(false);
                 break;
 
             }
@@ -46,7 +48,14 @@ void Map::drawMap() {
         }
     }
     for (int i = 0; i < Power.size(); i++) {
-        DrawRectangle(Power.at(i).x, Power.at(i).y, tileSize / 2, tileSize / 2, YELLOW);
+        if (foodPicked.at(Food.size()+i)) {
+            DrawRectangle(Power.at(i).x, Power.at(i).y, tileSize / 2, tileSize / 2, DARKGRAY);
+        }
+        else
+        {
+            DrawRectangle(Power.at(i).x, Power.at(i).y, tileSize / 2, tileSize / 2, GREEN);;
+        }
+        
     }
 }
 
@@ -69,6 +78,7 @@ std::vector<Vector2> Map::getPower()
 {
     return Power;
 }
+
 
 std::vector<bool> Map::getFoodPicked()
 {
