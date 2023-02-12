@@ -1,6 +1,6 @@
 #include "Enemy.h"
 
-Enemy::Enemy(Vector2 p, Map* map, int gp) {
+Enemy::Enemy(Vector2 p, Map* map, int gp) { //Enemy Constructor
 	speed = 160;
 	m = map;
 	isDead = false;
@@ -20,15 +20,17 @@ Enemy::Enemy(Vector2 p, Map* map, int gp) {
 	VTime = 5;
 	timer = SpawnCD;
 
+	CurrentDir = Vector2{ 1,0 };
+
 	isVulnerable = false;
 }
 
-void Enemy::tick() {
-	if (isDead)
+void Enemy::tick() { //Enemy update each Frame
+	if (isDead)								//Blinking when dead and respawning
 	{
 		timer -= GetFrameTime();
-		if (timer <= 1)
-		{
+		if (timer <= 1)						//Blinking Faster when respawning soon
+		{	
 			if ((fmod(timer, 0.2)) <= 0.1)
 				col = DeadCol;
 			else
@@ -40,17 +42,17 @@ void Enemy::tick() {
 			}
 		}
 		else {
-			if ((fmod(timer, 0.8)) <= 0.4)
+			if ((fmod(timer, 0.8)) <= 0.4) //Normal Blink Speed
 				col = BaseCol;
 			else
 				col = DeadCol;
 
 		}
 	}
-	else if (isVulnerable)
+	else if (isVulnerable)				//Blinking after a certain time to show the enemy will be back
 	{
 		timer -= GetFrameTime();
-		if (timer <= 1)
+		if (timer <= 1)					//Faster Blink
 		{
 			if ((fmod(timer, 0.2)) <= 0.1)
 				col = VulnerableCol;
@@ -62,7 +64,7 @@ void Enemy::tick() {
 				timer = 0;
 			}
 		}
-		else if (timer <= VTime / 2) {
+		else if (timer <= VTime / 2) {	//Blink when half the vulnerable time passed
 			if ((fmod(timer, 0.8)) <= 0.4)
 				col = BaseCol;
 			else
@@ -70,11 +72,14 @@ void Enemy::tick() {
 		}
 	}
 	else {
-		pos = Vector2{ pos.x + speed / 4 * GetFrameTime(), pos.y };
+		if (pos.x <= 40 || pos.x >570) {	//Normal left and right scrolling
+			CurrentDir = Vector2{-CurrentDir.x,0};
+		}
+		pos = Vector2{ pos.x + (speed * CurrentDir.x) * GetFrameTime(), pos.y };
 	}
 }
 
-void Enemy::setIsDead(bool b)
+void Enemy::setIsDead(bool b) //Set the enemy dead or respawn him
 {
 	isDead = b;
 	isVulnerable = false;
@@ -88,17 +93,17 @@ void Enemy::setIsDead(bool b)
 	}
 }
 
-bool Enemy::getIsDead()
+bool Enemy::getIsDead() //know if the enemy is dead
 {
 	return isDead;
 }
 
-bool Enemy::getIsVulnerable()
+bool Enemy::getIsVulnerable() //know if the enemy is dead
 {
 	return isVulnerable;
 }
 
-void Enemy::setIsVulnerable(bool b)
+void Enemy::setIsVulnerable(bool b)//Set the enemy vulnerable 
 {
 	if (!isDead) {
 		isVulnerable = b;

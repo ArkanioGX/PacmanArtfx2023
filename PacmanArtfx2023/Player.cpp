@@ -1,41 +1,44 @@
 #include "Player.h"
 
-void Player::tick()
+void Player::tick() //Update each frame for player
 {
 	int vdir = IsKeyDown(KEY_S) - IsKeyDown(KEY_W); //Vertical direction
 	int hdir = IsKeyDown(KEY_D) - IsKeyDown(KEY_A); //Horizontal direction
 
 	float vspd = vdir * speed * GetFrameTime();
-	float hspd = hdir * speed * GetFrameTime();
+	float hspd = hdir * speed * GetFrameTime(); //Get input and multi^ly with spd
 
 	float tileSize = m->getTileSize();
 
-	for (int i = 0; i < m->getWalls().size(); i++) {
+	for (int i = 0; i < m->getWalls().size(); i++) { //Check every wall for future collision
 		Vector2 wpos = m->getWalls().at(i);
 		if (CheckCollisionRecs(Rectangle{ pos.x + hspd,pos.y + vspd,size,size }, Rectangle{ wpos.x, wpos.y,tileSize,tileSize })) {
-			if (CheckCollisionRecs(Rectangle{ pos.x ,pos.y  + vspd,size ,size }, Rectangle{ wpos.x, wpos.y,tileSize,tileSize })) {
+			if (CheckCollisionRecs(Rectangle{ pos.x ,pos.y  + vspd,size ,size }, Rectangle{ wpos.x, wpos.y,tileSize,tileSize })) { //Check if its only collision on x
 				vspd = 0;
 			}
-			if (CheckCollisionRecs(Rectangle{ pos.x + hspd,pos.y ,size ,size  }, Rectangle{ wpos.x, wpos.y,tileSize,tileSize })) {
+			if (CheckCollisionRecs(Rectangle{ pos.x + hspd,pos.y ,size ,size  }, Rectangle{ wpos.x, wpos.y,tileSize,tileSize })) {//Check if its only collision on x
 				hspd = 0;
 			}
 		}
 	}
-	
+	//Check every food for future collision
 	for (int i = 0; i < m->getFood().size(); i++) {
 		Vector2 wpos = m->getFood().at(i);
 		if (!m->getFoodPicked().at(i)) {
 			if (CheckCollisionRecs(Rectangle{ pos.x + hspd,pos.y + vspd,size,size }, Rectangle{ wpos.x, wpos.y,tileSize / 4,tileSize / 4 })) {
 				std::cout << "Picked";
 				m->setFoodPicked(i, true);
-				score++;
+				score++;					//Add score
 				if (score == m->getFood().size()) {
 					Won = true;
 				}
 			}
 		}
 	}
+
+	pos = Vector2{ pos.x + hspd, pos.y + vspd }; //Update position
 	
+	//Check every powerup for future collision
 	for (int i = 0; i < m->getPower().size(); i++) {
 		int fsize = m->getFood().size();
 		Vector2 wpos = m->getPower().at(i);
@@ -50,7 +53,7 @@ void Player::tick()
 		}
 	}
 
-	
+	//Check every enemy for collision then kill the player
 	for (int i = 0; i < Enemies.size(); i++) {
 		Vector2 wpos = Enemies.at(i)->getPos();
 		if (CheckCollisionRecs(Rectangle{ pos.x + hspd,pos.y + vspd,size,size }, Rectangle{ wpos.x, wpos.y,30,30 })) {
@@ -67,10 +70,10 @@ void Player::tick()
 	}
 	
 
-	pos = Vector2{ pos.x + hspd, pos.y + vspd };
+	
 }
 
-Player::Player(Map* map) {
+Player::Player(Map* map) { //Constructor
 	speed = 175;
 	m = map;
 	score = 0;
@@ -92,7 +95,7 @@ bool Player::isWon()
 	return Won;
 }
 
-void Player::setEnemies(std::vector<Enemy*> en)
+void Player::setEnemies(std::vector<Enemy*> en) //Set a list of enemies to check in tick() for colission
 {
 	for (int i = 0; i < en.size(); i++) {
 		Enemies.push_back(en.at(i));

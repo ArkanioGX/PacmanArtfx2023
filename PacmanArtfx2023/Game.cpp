@@ -1,7 +1,7 @@
 #include "Game.h"
 #include <string>
 
-Game::Game(int resWidth, int resHeight, std::string title, int fpsMax)
+Game::Game(int resWidth, int resHeight, std::string title, int fpsMax) //Load for first time the game
 {
 	assert(!IsWindowReady());
 	SetTargetFPS(fpsMax);
@@ -21,23 +21,24 @@ Game::Game(int resWidth, int resHeight, std::string title, int fpsMax)
 
 Game::~Game() noexcept
 {
+	
 }
 
 bool Game::gameShouldClose() const
 {
-	return false;
+	return WindowShouldClose();
 }
 
-void Game::Update()
+void Game::Update() //Call all tick and draw all objects
 {
-	if (!player->isWon() && !player->getIsDead()) {
+	if (!player->isWon() && !player->getIsDead()) { //Condition to know if the game should be stopped
 		player->tick();
 		scoreTxt = "Score : " + std::to_string(player->getScore());
 		for (int i = 0; i < Enemies.size(); i++) {
 			Enemies.at(i)->tick();
 		}
 	}
-	else
+	else //Show message when game finished
 	{
 		if (player->isWon()) {
 			scoreTxt = "Bravo !!!";
@@ -50,15 +51,15 @@ void Game::Update()
 	drawAll();
 }
 
-void Game::drawAll()
+void Game::drawAll() //Draw all objects
 {
 	BeginDrawing();
 	ClearBackground(Color{ 20,30,80,255 });
 	
 	DrawText(scoreTxt.c_str(),0,0,40,RAYWHITE);
-	map->drawMap();
-	player->draw();
-	for (int i = 0; i < Enemies.size(); i++) {
+	map->drawMap();								//Draw Map
+	player->draw();								//Draw Player
+	for (int i = 0; i < Enemies.size(); i++) {	//Draw Enemies
 		Enemies.at(i)->draw();
 	}
 	EndDrawing();

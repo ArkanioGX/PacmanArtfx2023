@@ -1,6 +1,7 @@
 #pragma once
-#include "Map.h"
+
 #include "Actor.h"
+#include "Map.h"
 
 class Enemy : public Actor
 {
@@ -13,19 +14,17 @@ private:
 	float SpawnCD, RSpawnCD, VTime, timer;
 	int GoodPercentage;
 
-	Vector2 lastDir, CurrentDir, spawnPos, ppos;
+	Vector2 CurrentDir, spawnPos, ppos;
 
 	Color BaseCol, DeadCol, VulnerableCol;
 
 public:
-	void tick();
+	void tick(); //Update each frame
 
 	Enemy(Vector2 p, Map* map, int gp);
 
-	bool getIsDead(), getIsVulnerable();
+	bool getIsDead(), getIsVulnerable(); 
 	void setIsDead(bool b), setIsVulnerable(bool b);
-	//void setPlayer(Player* pla);
 
-	Vector2 findDir(Vector2 target, bool isForward);
 };
 

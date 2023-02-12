@@ -3,14 +3,14 @@
 class Actor
 {
 protected:
-	Vector2 pos;
-	Color col;
-	float size;
+	Vector2 pos; //Position
+	Color col;	//Color
+	float size; //Size in pixels
 
 public:
 	Vector2 getPos();
 	void setPos(Vector2 p);
 
-	virtual void draw();
+	virtual void draw(); //Draw object
 };
 
