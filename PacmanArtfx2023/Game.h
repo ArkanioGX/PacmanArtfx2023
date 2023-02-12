@@ -1,7 +1,8 @@
 #pragma once
 #include <string>
 #include "raylib.h"
-
+#include "Player.h"
+#include "Enemy.h"
 #include "assert.h"
 #include "Map.h"
 #include <iostream>

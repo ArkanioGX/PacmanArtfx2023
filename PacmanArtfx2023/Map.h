@@ -1,8 +1,6 @@
 #pragma once
 #include <Vector>
 #include "raylib.h"
-#include "Player.h"
-#include "Enemy.h"
 class Map
 {
 private:

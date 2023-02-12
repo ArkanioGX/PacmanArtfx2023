@@ -2,8 +2,6 @@
 #include "Map.h"
 #include "Actor.h"
 
-
-
 class Enemy : public Actor
 {
 private:
@@ -26,8 +24,8 @@ public:
 
 	bool getIsDead(), getIsVulnerable();
 	void setIsDead(bool b), setIsVulnerable(bool b);
-	void setPlayer(Player* pla);
+	//void setPlayer(Player* pla);
 
-	Vector2 findDir(Vector2 target,bool isForward);
+	Vector2 findDir(Vector2 target, bool isForward);
 };
 

@@ -35,14 +35,14 @@ void Player::tick()
 			}
 		}
 	}
-
+	
 	for (int i = 0; i < m->getPower().size(); i++) {
 		int fsize = m->getFood().size();
 		Vector2 wpos = m->getPower().at(i);
-		if (!m->getFoodPicked().at(fsize+i)) {
+		if (!m->getFoodPicked().at(fsize + i)) {
 			if (CheckCollisionRecs(Rectangle{ pos.x + hspd,pos.y + vspd,size,size }, Rectangle{ wpos.x, wpos.y,20,20 })) {
 				std::cout << "Picked Power";
-				m->setFoodPicked(fsize+i, true);
+				m->setFoodPicked(fsize + i, true);
 				for (int i = 0; i < Enemies.size(); i++) {
 					Enemies.at(i)->setIsVulnerable(true);
 				}
@@ -50,12 +50,12 @@ void Player::tick()
 		}
 	}
 
-
+	
 	for (int i = 0; i < Enemies.size(); i++) {
 		Vector2 wpos = Enemies.at(i)->getPos();
 		if (CheckCollisionRecs(Rectangle{ pos.x + hspd,pos.y + vspd,size,size }, Rectangle{ wpos.x, wpos.y,30,30 })) {
 			Enemy* currentEnemy = Enemies.at(i);
-			if (!currentEnemy->getIsVulnerable() && !currentEnemy->getIsDead()) 
+			if (!currentEnemy->getIsVulnerable() && !currentEnemy->getIsDead())
 			{
 				std::cout << "ded";
 				isDead = true;
@@ -97,9 +97,4 @@ void Player::setEnemies(std::vector<Enemy*> en)
 	for (int i = 0; i < en.size(); i++) {
 		Enemies.push_back(en.at(i));
 	}
-	
 }
-
-
-
-

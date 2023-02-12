@@ -1,7 +1,6 @@
 #pragma once
 #include "raylib.h"
-
-class Actor 
+class Actor
 {
 protected:
 	Vector2 pos;
@@ -13,7 +12,5 @@ public:
 	void setPos(Vector2 p);
 
 	virtual void draw();
-
-	Actor();
 };
 

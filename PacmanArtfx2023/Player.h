@@ -1,8 +1,9 @@
 #pragma once
-#include "Map.h"
 #include "Actor.h"
-#include <vector>
+#include "Enemy.h"
+#include "Map.h"
 #include <iostream>
+#include <vector>
 class Player : public Actor
 {
 private:
@@ -13,7 +14,7 @@ private:
 
 	bool isDead, Won;
 
-	std::vector<Enemy> Enemies;
+	std::vector<Enemy*> Enemies;
 
 public:
 	void tick();
