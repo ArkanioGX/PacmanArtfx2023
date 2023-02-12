@@ -1,0 +1,8 @@
+﻿  Game.cpp
+  Player.cpp
+C:\Users\clare\source\repos\PacmanArtfx2023\PacmanArtfx2023\Player.cpp(11,17): warning C4244: 'initialisation' : conversion de 'int' en 'float', perte possible de données
+C:\Users\clare\source\repos\PacmanArtfx2023\PacmanArtfx2023\Player.cpp(13,20): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\clare\source\repos\PacmanArtfx2023\PacmanArtfx2023\Player.cpp(25,20): warning C4018: '<' : incompatibilité signed/unsigned
+  main.cpp
+  Génération de code en cours...
+  PacmanArtfx2023.vcxproj -> C:\Users\clare\source\repos\PacmanArtfx2023\Debug\PacmanArtfx2023.exe
